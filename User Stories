@@ -1,0 +1,26 @@
+taskr User Stories
+==================
+
+As a user,
+I want to store tasks that need to be done
+so that I can see them in the future
+
+As a user,
+I want to be able to see all my tasks in one place
+so that I can choose what to do
+
+As a user,
+I want I want to be able to set at due date on my tasks
+so that I can accomplish my tasks on time
+
+As a user,
+I want to set a priority to my tasks
+So that I can choose what to do
+
+As a user,
+I want to set a category to my tasks
+So that I can group the tasks together
+
+As a user,
+I want to be able to sort all my tasks by due date priority and category
+so that I can better visualise all the tasks I have to do
