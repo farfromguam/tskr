@@ -72,7 +72,7 @@ simple rake file and tests passing.
 To do
 -----
 
-[ ] shebang, hashbang - for dropping ruby in terminal call
+[ ] check out shebang(hashbang) - for dropping ruby in terminal call
 
 [ ] Make a task manager
 
