@@ -35,7 +35,7 @@ Planned Use
 
 <call> | <action> | <target>       | <flag>
 ---------------------------------------------
-tskr   | add      | task "item"    | -p -d -c
+tskr   | new      | task "item"    | -p -d -c
        | mark     | id             |
        | remove   | id             |
        |          |                |

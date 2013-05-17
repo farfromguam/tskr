@@ -1,0 +1,40 @@
+task(s)            |         | Categor(y/ies)
+------------------ |\        |-------------------
+id - primary       |---------| id - primary
+category - forgien |/        | category - text
+task - text        |         | due_date *
+due_date *         |         | priority *
+priority *         |
+completed - T/F    |
+date_completed     |
+
+
+If task has a category &&
+  category had priority and/or due_date
+  task record inherits the data
+
+If there is no category and/or Category has no due_date/priority
+  Allow task to set fields
+
+If Category has due_date and/or Priority &&
+Task has due_date and/or priority
+  Data from task is used
+
+
+When listing records,
+
+if !task.due_date.nil?
+    due_date = task.due_date
+elsif !task.category.due_date.nil?
+    due_date = task.category.due_date
+else
+    due_date = nil
+end
+
+if !task.priority.nil?
+    priority = task.priority
+elsif !task.category.priority.nil?
+    priority = task.category.priority
+else
+    priority = nil
+end

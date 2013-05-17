@@ -1,0 +1,34 @@
+#!/usr/bin/env ruby
+
+require_relative 'bootstrap_ar'
+
+action = ARGV[0]
+target = ARGV[1]
+flag = ARGV[2]
+
+if action == "new"
+  Task.create( name: target )
+elsif action == "list"
+  tasks = Task.all
+  tasks.each_with_index do |task, i|
+    puts "#{task.id} [ ] #{task.name}"
+  end
+elsif action == "delete"
+  matching_task = Task.where( id: target ).all
+  matching_task.each do |task|
+    task.destroy
+  end
+elsif action == "mark"
+
+end
+
+
+
+
+time_for_beer = <<-eos
+   .:.
+ _oOoOo  Nothing to do
+[_|||||  time for beer
+  |||||        -tskr
+  ~~~~~
+eos
