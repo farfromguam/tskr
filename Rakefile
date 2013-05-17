@@ -16,7 +16,7 @@ task :default => :test
 
 # this bit grabs all the files in db/migrate
 # and runs the new ones on command
-# 'rake db:migrate'
+# `rake db:migrate`
 
 require 'active_record'
 require 'yaml'

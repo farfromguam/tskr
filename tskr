@@ -6,12 +6,14 @@ action = ARGV[0]
 target = ARGV[1]
 flag = ARGV[2]
 
-if action == "new"
+if action == "add"
   Task.create( name: target )
 elsif action == "list"
   tasks = Task.all
   tasks.each_with_index do |task, i|
-    puts "#{task.id} [ ] #{task.name}"
+    check = " "
+    check = "x" if task.complete?
+    puts "#{task.id} [#{check}] #{task.name}"
   end
 elsif action == "delete"
   matching_task = Task.where( id: target ).all
@@ -19,7 +21,13 @@ elsif action == "delete"
     task.destroy
   end
 elsif action == "mark"
-
+  target_task = Task.find_by_id(target)
+  target_task.complete = true
+  target_task.save
+elsif action == "unmark"
+  target_task = Task.find_by_id(target)
+  target_task.complete = false
+  target_task.save
 end
 
 

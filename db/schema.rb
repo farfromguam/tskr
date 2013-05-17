@@ -14,7 +14,8 @@
 ActiveRecord::Schema.define(:version => 20130516090000) do
 
   create_table "tasks", :force => true do |t|
-    t.string "name"
+    t.string  "name"
+    t.boolean "complete", :default => false
   end
 
 end
