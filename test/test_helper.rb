@@ -5,5 +5,6 @@ module DatabaseCleaner
   def before_setup
     super
     Task.destroy_all
+    Category.destroy_all
   end
 end

@@ -33,16 +33,23 @@ Gravy
 Planned Use
 -----------
 
-<call> | <action> | <target>       | <flag>
----------------------------------------------
-tskr   | new      | task "item"    | -p -d -c
-       | mark     | id             |
-       | remove   | id             |
-       |          |                |
-tskr   | list     | *              |
-       | list     | "category"     | -a -d
-       |          |                |
-tskr   | sortby   | t/p/d/c        | -a -d
+<call> | <action>    | <target>     | <flag>
+       | ARGV[0]     | ARGV[1]      |
+----------------------------------------------
+tskr   | + (add)     | "task"       | -p -d -c
+       | - (remove)  | task id      |
+       | x (mark)    | task id      |
+       | !x (unmark) | task id      |
+       |             |              |
+tskr   | +category   | "category"   |
+       | -category   | "by name"    |
+       |             |              |
+tskr   | list        |              |
+       | list        | * (all)      |
+       | list        |              |
+       | list        | "category"   | -a -d
+       |             |              |
+tskr   | sortby      | t/p/d/c      | -a -d
 
 
 Flags (handle with ruby optparse)

@@ -2,32 +2,49 @@
 
 require_relative 'bootstrap_ar'
 
+#call = tskr
 action = ARGV[0]
 target = ARGV[1]
 flag = ARGV[2]
 
-if action == "add"
+
+if action == "+"
   Task.create( name: target )
-elsif action == "list"
-  tasks = Task.all
+elsif action == "-"
+  Task.where( id: target ).first.destroy
+elsif action == "x"
+  target_task = Task.find_by_id(target)
+  target_task.complete = true
+  target_task.save
+elsif action == "!x"
+  target_task = Task.find_by_id(target)
+  target_task.complete = false
+  target_task.save
+end
+
+
+if action == "list"
+
+  if target == nil
+    tasks = Task.all
+  elsif target == "completed"
+    tasks = Tasks.where( complete: true ).all
+  else
+    tasks = Tasks.where( category_id: target )
+  end
+
   tasks.each_with_index do |task, i|
     check = " "
     check = "x" if task.complete?
     puts "#{task.id} [#{check}] #{task.name}"
   end
-elsif action == "delete"
-  matching_task = Task.where( id: target ).all
-  matching_task.each do |task|
-    task.destroy
-  end
-elsif action == "mark"
-  target_task = Task.find_by_id(target)
-  target_task.complete = true
-  target_task.save
-elsif action == "unmark"
-  target_task = Task.find_by_id(target)
-  target_task.complete = false
-  target_task.save
+end
+
+
+if action == "+category"
+    Category.create( name: target )
+elsif action == "-category"
+    Category.where( name: target ).first.destroy
 end
 
 

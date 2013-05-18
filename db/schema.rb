@@ -11,11 +11,16 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20130516090000) do
+ActiveRecord::Schema.define(:version => 20130518133000) do
+
+  create_table "categories", :force => true do |t|
+    t.string "name"
+  end
 
   create_table "tasks", :force => true do |t|
     t.string  "name"
-    t.boolean "complete", :default => false
+    t.boolean "complete",    :default => false
+    t.integer "category_id"
   end
 
 end

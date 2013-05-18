@@ -10,12 +10,16 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
   end
 
   def test_list_with_items
-    `./tskr add "foo"`
-    `./tskr add "bar"`
+    `./tskr + "foo"`
+    `./tskr + "bar"`
     results = `./tskr list`
     assert results.include? ('foo')
     assert results.include? ('bar')
   end
+
+  # def test_list_all
+  #   `./tskr list *`
+  # end
 
 end
 
