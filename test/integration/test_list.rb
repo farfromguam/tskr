@@ -1,4 +1,4 @@
-require 'test_helper.rb'
+require_relative '../test_helper'
 
 class TskrIntegrationTest < MiniTest::Unit::TestCase
   include DatabaseCleaner
@@ -6,7 +6,7 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
   def test_list_on_empty_database
     assert Task.all.empty?
     actual = `./tskr list`
-    assert_equal "", actual
+    assert_equal "Nothing to do.\n", actual
   end
 
   def test_list_with_items
@@ -16,10 +16,6 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
     assert results.include? ('foo')
     assert results.include? ('bar')
   end
-
-  # def test_list_all
-  #   `./tskr list *`
-  # end
 
 end
 

@@ -88,6 +88,14 @@ Known Bugs
 ----------
 
 
+# time_for_beer = <<-eos
+#    .:.
+#  _oOoOo  Nothing to do
+# [_|||||  time for beer
+#   |||||        -tskr
+#   ~~~~~
+# eos
+
 
 
 

@@ -1,6 +1,8 @@
 #!/usr/bin/env ruby
 
 require_relative 'bootstrap_ar'
+database = ENV['FP_ENV'] || 'development'
+connect_to database
 
 #call = tskr
 action = ARGV[0]
@@ -9,7 +11,11 @@ flag = ARGV[2]
 
 
 if action == "+"
-  Task.create( name: target )
+  category = Category.where( name: flag ).first
+  if category.nil?
+    category = Category.create( name: flag )
+  end
+  Task.create( name: target, category: category )
 elsif action == "-"
   Task.where( id: target ).first.destroy
 elsif action == "x"
@@ -23,37 +29,54 @@ elsif action == "!x"
 end
 
 
-if action == "list"
+if action == "list" || action == "l"
 
-  if target == nil
+  if target == nil || target == "o" || target == "outstanding"
+    title = "Outstanding Tasks:"
+    tasks = Task.where( complete: false ).all
+  elsif target == "a" || target == "all"
+    title = "All the Tasks:"
     tasks = Task.all
-  elsif target == "completed"
-    tasks = Tasks.where( complete: true ).all
-  else
-    tasks = Tasks.where( category_id: target )
+  elsif target == "completed" || target == "complete" || target == "done"
+    title = "Completed Tasks:"
+    tasks = Task.where( complete: true ).all
+  elsif target.is_a? String
+    title = " Tasks: for #{target}"
+    tasks = Task.where( category: target ).all
   end
+
+  if tasks.size == 0
+    title =  "Nothing to do."
+  end
+
+  puts title
 
   tasks.each_with_index do |task, i|
     check = " "
     check = "x" if task.complete?
-    puts "#{task.id} [#{check}] #{task.name}"
+
+    if task.category.nil?
+      category = "n/a"
+    else
+      category = task.category.name
+    end
+
+    puts "#{task.id} [#{check}] #{task.name.ljust(30, '__')} #{category}"
+
   end
+
 end
 
 
 if action == "+category"
-    Category.create( name: target )
+    #category name must be unique, will fail if not.
+    category = Category.create( name: target )
+    if category.save
+      puts "Success!"
+    else
+      puts "Failure."
+    end
 elsif action == "-category"
     Category.where( name: target ).first.destroy
 end
 
-
-
-
-time_for_beer = <<-eos
-   .:.
- _oOoOo  Nothing to do
-[_|||||  time for beer
-  |||||        -tskr
-  ~~~~~
-eos

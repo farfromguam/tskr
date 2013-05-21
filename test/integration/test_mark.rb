@@ -1,4 +1,4 @@
-require 'test_helper.rb'
+require_relative '../test_helper'
 
 class TskrIntegrationTest < MiniTest::Unit::TestCase
   include DatabaseCleaner
