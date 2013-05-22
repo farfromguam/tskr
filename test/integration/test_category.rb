@@ -3,6 +3,10 @@ require_relative '../test_helper'
 class TskrCategoryTests < MiniTest::Unit::TestCase
   include DatabaseCleaner
 
+  def test
+    assert_equal true, true
+  end
+
   def test_add_a_category
     `./tskr +category "foo"`
     assert_equal 1, Category.count
@@ -41,8 +45,8 @@ class TskrCategoryTests < MiniTest::Unit::TestCase
     assert results.include?('Failure.'), "Actually was '#{results}'"
   end
 
-  def test_tasks_with_same_category_have_same_category
+ #  def test_tasks_with_same_category_have_same_category
 
-  end
+ #  end
 
 end

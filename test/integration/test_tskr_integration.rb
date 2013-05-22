@@ -3,6 +3,10 @@ require_relative '../test_helper'
 class TskrIntegrationTest < MiniTest::Unit::TestCase
   include DatabaseCleaner
 
+  def test
+    assert_equal true, true
+  end
+
   def test_database_cleaner_working
     assert_equal Task.count, 0
   end

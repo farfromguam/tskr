@@ -4,52 +4,71 @@ require_relative 'bootstrap_ar'
 database = ENV['FP_ENV'] || 'development'
 connect_to database
 
-#call = tskr
-action = ARGV[0]
-target = ARGV[1]
-flag = ARGV[2]
+arg_hash = {}
 
+ARGV.each_with_index{ |val, idx|
+  #\/ do with next
+  if val == "+"
+    arg_hash[:action] = "add_task"
+    arg_hash[:name] = "#{ARGV[idx+1]}"
+  elsif val == "+cat" || val == "+category"
+    arg_hash[:action] = "add_category"
+    arg_hash[:name] = "#{ARGV[idx+1]}"
 
-if action == "+"
-  category = Category.where( name: flag ).first
-  if category.nil?
-    category = Category.create( name: flag )
+  #\/ flags
+  elsif val == "-c"
+    arg_hash[:category] = "#{ARGV[idx+1]}"
+  elsif val == "-d"
+    arg_hash[:due_date] = "#{ARGV[idx+1]}"
+  elsif val == "-p"
+    arg_hash[:priority] = "#{ARGV[idx+1]}"
+
+  #\/ do based on ID
+  elsif val == "-"
+    arg_hash[:action] = "remove_task"
+    arg_hash[:id] = "#{ARGV[idx+1]}"
+  elsif val == "x"
+    arg_hash[:action] = "mark_task"
+    arg_hash[:id] = "#{ARGV[idx+1]}"
+  elsif val == "!x"
+    arg_hash[:action] = "unmark_task"
+    arg_hash[:id] = "#{ARGV[idx+1]}"
+  elsif val == "l"
+    #list them
+
+  #\/ based on name
+  elsif val == "-cat" || val == "-category"
+    arg_hash[:action] = "remove_category"
+    arg_hash[:name] = "#{ARGV[idx+1]}"
+
+  elsif val == "l" || val == "list"
+    arg_hash[:action] = "list"
+    arg_hash[:option] = "#{ARGV[idx+1]}"
   end
-  Task.create( name: target, category: category )
-elsif action == "-"
-  Task.where( id: target ).first.destroy
-elsif action == "x"
-  target_task = Task.find_by_id(target)
-  target_task.complete = true
-  target_task.save
-elsif action == "!x"
-  target_task = Task.find_by_id(target)
-  target_task.complete = false
-  target_task.save
+
+}
+
+controller = TskrController.new(arg_hash)
+
+
+if arg_hash[:action] == "add_task"
+  controller.add_task
+elsif arg_hash[:action] == "remove_task"
+  controller.remove_task
+elsif arg_hash[:action] == "mark_task"
+  controller.mark_task
+elsif arg_hash[:action] == "unmark_task"
+  controller.unmark_task
+elsif arg_hash[:action] == "add_category"
+  controller.add_category
+elsif arg_hash[:action] == "remove_category"
+  controller.remove_category
 end
 
 
-if action == "list" || action == "l"
+if arg_hash[:action] == "list"
 
-  if target == nil || target == "o" || target == "outstanding"
-    title = "Outstanding Tasks:"
-    tasks = Task.where( complete: false ).all
-  elsif target == "a" || target == "all"
-    title = "All the Tasks:"
-    tasks = Task.all
-  elsif target == "completed" || target == "complete" || target == "done"
-    title = "Completed Tasks:"
-    tasks = Task.where( complete: true ).all
-  elsif target.is_a? String
-    title = " Tasks: for #{target}"
-    tasks = Task.where( category: target ).all
-  end
-
-  if tasks.size == 0
-    title =  "Nothing to do."
-  end
-
-  puts title
+  tasks = Task.all
 
   tasks.each_with_index do |task, i|
     check = " "
@@ -66,17 +85,3 @@ if action == "list" || action == "l"
   end
 
 end
-
-
-if action == "+category"
-    #category name must be unique, will fail if not.
-    category = Category.create( name: target )
-    if category.save
-      puts "Success!"
-    else
-      puts "Failure."
-    end
-elsif action == "-category"
-    Category.where( name: target ).first.destroy
-end
-
