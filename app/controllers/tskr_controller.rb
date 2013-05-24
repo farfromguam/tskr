@@ -5,29 +5,36 @@ class TskrController
   end
 
   def query_category
-    Category.where( name: @params[:name] ).first
+    Category.where( name: @params[:category] ).first
   end
 
   def add_category
-    category = Category.create( name: @params[:name] )
+    category = Category.create( name: @params[:category_name], priority: @params[:priority], due_date: @params[:due_date] )
     if category.save
-      puts "Success!"
+      puts "New Category #{@params[:category_name]} added"
     else
-      puts "Failure."
+      puts "Failure. Category not added"
     end
   end
 
   def remove_category
-    Category.where( name: @params[:name] ).first.destroy
+    Category.where( name: @params[:category_name] ).first.destroy
   end
 
   def add_task
-    #SEARCH FOR MATCHNG CATEGORY
+
     category = query_category
     if category.nil?
-      add_category
+      Category.create( name: @params[:category] )
     end
-    Task.create( name: @params[:name], category: @params[:category] )
+
+    task = Task.create( name: @params[:task_name], category: query_category, priority: @params[:priority], due_date: @params[:due_date] )
+    if task.save
+      puts "New task #{@params[:task_name]} added"
+    else
+      puts "Failure, Task not added"
+    end
+
   end
 
   def remove_task
@@ -45,5 +52,14 @@ class TskrController
     target_task.complete = false
     target_task.save
   end
+
+banner = <<-eos
+        /)
+_/_ _  (/_  __
+(__/_)_/(__/ (_
+eos
+
+
+
 
 end

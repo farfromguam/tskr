@@ -7,43 +7,44 @@ connect_to database
 arg_hash = {}
 
 ARGV.each_with_index{ |val, idx|
-  #\/ do with next
+
   if val == "+"
     arg_hash[:action] = "add_task"
-    arg_hash[:name] = "#{ARGV[idx+1]}"
-  elsif val == "+cat" || val == "+category"
-    arg_hash[:action] = "add_category"
-    arg_hash[:name] = "#{ARGV[idx+1]}"
+    arg_hash[:task_name] = "#{ARGV[idx+1]}"
 
-  #\/ flags
-  elsif val == "-c"
-    arg_hash[:category] = "#{ARGV[idx+1]}"
-  elsif val == "-d"
-    arg_hash[:due_date] = "#{ARGV[idx+1]}"
-  elsif val == "-p"
-    arg_hash[:priority] = "#{ARGV[idx+1]}"
-
-  #\/ do based on ID
   elsif val == "-"
     arg_hash[:action] = "remove_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
+
+  elsif val == "+cat" || val == "+category"
+    arg_hash[:action] = "add_category"
+    arg_hash[:category_name] = "#{ARGV[idx+1]}"
+
+  elsif val == "-cat" || val == "-category"
+    arg_hash[:action] = "remove_category"
+    arg_hash[:category_name] = "#{ARGV[idx+1]}"
+
+  elsif val == "-c"
+    arg_hash[:category] = "#{ARGV[idx+1]}"
+
+  elsif val == "-d"
+    arg_hash[:due_date] = "#{ARGV[idx+1]}"
+
+  elsif val == "-p"
+    arg_hash[:priority] = "#{ARGV[idx+1]}"
+
   elsif val == "x"
     arg_hash[:action] = "mark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
+
   elsif val == "!x"
     arg_hash[:action] = "unmark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
-  elsif val == "l"
-    #list them
-
-  #\/ based on name
-  elsif val == "-cat" || val == "-category"
-    arg_hash[:action] = "remove_category"
-    arg_hash[:name] = "#{ARGV[idx+1]}"
 
   elsif val == "l" || val == "list"
     arg_hash[:action] = "list"
     arg_hash[:option] = "#{ARGV[idx+1]}"
+
   end
 
 }

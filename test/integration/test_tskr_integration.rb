@@ -32,7 +32,7 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
 
   def test_adding_task_to_existing_category
     `./tskr +category "fatcat"`
-    `./tskr + "task" fatcat`
+    `./tskr + "task" -c fatcat`
     list = `./tskr list`
     assert list.include? ('task')
     # assert list.include? ('fatcat')
@@ -40,7 +40,7 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
 
   def test_adding_task_to_category_that_does_not_exist
     assert Category.where( name: 'fatcat').all.empty?
-    `./tskr + "task" fatcat`
+    `./tskr + "task" -c fatcat`
     list = `./tskr list`
     assert list.include? ('task')
     # assert list.include? ('fatcat')

@@ -22,7 +22,7 @@ class TskrCategoryTests < MiniTest::Unit::TestCase
     `./tskr +category "foo"`
     `./tskr +category "bar"`
     `./tskr +category "cat"`
-    Category.where( name: 'bar' ).first.destroy
+    `./tskr -category "bar"`
     assert Category.where( name: 'bar').all.empty?
   end
 
