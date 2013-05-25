@@ -3,10 +3,6 @@ require_relative '../test_helper'
 class TskrIntegrationTest < MiniTest::Unit::TestCase
   include DatabaseCleaner
 
-  def test
-    assert_equal true, true
-  end
-
   def test_mark_task_as_complete
     `./tskr + "foo"`
     target_id = Task.where( name: 'foo' ).first.id

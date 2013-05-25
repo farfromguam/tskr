@@ -14,16 +14,16 @@
 ActiveRecord::Schema.define(:version => 20130525094000) do
 
   create_table "categories", :force => true do |t|
-    t.string  "name"
-    t.integer "priority"
-    t.date    "due_date"
+    t.string "name"
+    t.string "priority"
+    t.date   "due_date"
   end
 
   create_table "tasks", :force => true do |t|
     t.string  "name"
     t.boolean "complete",    :default => false
     t.integer "category_id"
-    t.integer "priority"
+    t.string  "priority"
     t.date    "due_date"
   end
 

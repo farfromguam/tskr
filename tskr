@@ -8,11 +8,11 @@ arg_hash = {}
 
 ARGV.each_with_index{ |val, idx|
 
-  if val == "+"
+  if val == "+" || val == "+t"
     arg_hash[:action] = "add_task"
     arg_hash[:task_name] = "#{ARGV[idx+1]}"
 
-  elsif val == "-"
+  elsif val == "-" || val == "-t"
     arg_hash[:action] = "remove_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
 
@@ -28,16 +28,16 @@ ARGV.each_with_index{ |val, idx|
     arg_hash[:category] = "#{ARGV[idx+1]}"
 
   elsif val == "-d"
-    arg_hash[:due_date] = "#{ARGV[idx+1]}"
+    arg_hash[:due_date] = Date.parse("#{ARGV[idx+1]}")
 
   elsif val == "-p"
     arg_hash[:priority] = "#{ARGV[idx+1]}"
 
-  elsif val == "x"
+  elsif val == "x" || val == "xt"
     arg_hash[:action] = "mark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
 
-  elsif val == "!x"
+  elsif val == "!x" || val == "!xt"
     arg_hash[:action] = "unmark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
 
@@ -46,11 +46,9 @@ ARGV.each_with_index{ |val, idx|
     arg_hash[:option] = "#{ARGV[idx+1]}"
 
   end
-
 }
 
 controller = TskrController.new(arg_hash)
-
 
 if arg_hash[:action] == "add_task"
   controller.add_task
@@ -64,25 +62,8 @@ elsif arg_hash[:action] == "add_category"
   controller.add_category
 elsif arg_hash[:action] == "remove_category"
   controller.remove_category
+elsif arg_hash[:action] == "list"
+  controller.list
 end
 
 
-if arg_hash[:action] == "list"
-
-  tasks = Task.all
-
-  tasks.each_with_index do |task, i|
-    check = " "
-    check = "x" if task.complete?
-
-    if task.category.nil?
-      category = "n/a"
-    else
-      category = task.category.name
-    end
-
-    puts "#{task.id} [#{check}] #{task.name.ljust(30, '__')} #{category}"
-
-  end
-
-end
