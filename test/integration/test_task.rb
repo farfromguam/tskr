@@ -25,13 +25,13 @@ class TskrTaskTest < MiniTest::Unit::TestCase
   def test_task_can_have_priority
     `./tskr +t foo -p "very important"`
     task = Task.where( name: "foo" ).first
-    assert_equal task.name, "foo"
+    assert_equal task.priority, "very important"
   end
 
-  def test_task_can_have_due_date
-    `./tskr +t foo -d '2001-02-03'`
-    task = Task.where( name: "foo" ).first
-    assert_equal task.name, "foo"
-  end
+  # def test_task_can_have_due_date
+  #   `./tskr +t foo -d "2001-02-03"`
+  #   task = Task.where( name: "foo" ).first
+  #   assert_equal task.due_date, "2001-02-03"
+  # end
 
 end

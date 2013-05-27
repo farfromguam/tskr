@@ -63,7 +63,7 @@ elsif arg_hash[:action] == "add_category"
 elsif arg_hash[:action] == "remove_category"
   controller.remove_category
 elsif arg_hash[:action] == "list"
-  controller.list
+  controller.render
 end
 
 

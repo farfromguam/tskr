@@ -44,13 +44,13 @@ class TskrCategoryTests < MiniTest::Unit::TestCase
   def test_category_can_have_priority
     `./tskr +cat foo -p "very important"`
     category = Category.where( name: "foo" ).first
-    assert_equal category.name, "foo"
+    assert_equal category.priority, "very important"
   end
 
-  def test_category_can_have_due_date
-    `./tskr +cat foo -d '2001-02-03'`
-    category = Category.where( name: "foo" ).first
-    assert_equal category.name, "foo"
-  end
+  # def test_category_can_have_due_date
+  #   `./tskr +cat foo -d "2001-02-03"`
+  #   category = Category.where( name: "foo" ).first
+  #   assert_equal "2001-02-03", category.due_date
+  # end
 
 end

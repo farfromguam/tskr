@@ -33,68 +33,57 @@ Gravy
 Planned Use
 -----------
 
-<call> | <action>    | <target>     | <flag>
-       | ARGV[0]     | ARGV[1]      |
-----------------------------------------------
-tskr   | + (add)     | "task"       | -p -d -c
-       | - (remove)  | task id      |
-       | x (mark)    | task id      |
-       | !x (unmark) | task id      |
-       |             |              |
-tskr   | +category   | "category"   |
-       | -category   | "by name"    |
-       |             |              |
-tskr   | list        |              |
-       | list        | * (all)      |
-       | list        |              |
-       | list        | "category"   | -a -d
-       |             |              |
-tskr   | sortby      | t/p/d/c      | -a -d
+Task Actions
++  | Add Task     | Add by "name"
+-  | Remove Task  | Address by ID
+x  | Mark Task    | Address by ID
+!x | Unmark Task  | Address by ID
 
+Task Flags
+-c category -- New or Existing
+-p priority -- string
+-d due date -- date YYYY-MM-DD
 
-Flags (handle with ruby optparse)
--p priority
--d due date
--c category
+Category Actions
++category   | Add by "name"
+-category   | Address by "name"
+
+Category Flags
+-p priority -- string
+-d due date -- YYYY-MM-DD
+
+List Action
+list
+
+Sort Flags (coming soon)
 -a ascending order oldest, 0-9, A-Z
 -d desending order newest, 9-0, Z-A
 
-
 Date Entry
 hopefully tskr will support common language date entry
-tomorrow => day +1
-next week => day +7
+tomorrow => today +1
+next week => today +7
 next month => month +1
 
 
 Current State
 =============
 
-In planning...
-simple rake file and tests passing.
-
-
+Just about ready for Project Demos
 
 
 To do
 -----
 
-[ ] check out shebang(hashbang) - for dropping ruby in terminal call
-
-[ ] Make a task manager
+[x] Update Readme
+[ ] Implement sort feature
+[ ]
 
 
 Known Bugs
 ----------
 
-
-# time_for_beer = <<-eos
-#    .:.
-#  _oOoOo  Nothing to do
-# [_|||||  time for beer
-#   |||||        -tskr
-#   ~~~~~
-# eos
+Date input changes type and does not pass tests.
 
 
 
