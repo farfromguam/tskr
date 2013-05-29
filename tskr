@@ -37,7 +37,7 @@ ARGV.each_with_index{ |val, idx|
     arg_hash[:action] = "mark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
 
-  elsif val == "!x" || val == "!xt"
+  elsif val == "x!" || val == "xt!"
     arg_hash[:action] = "unmark_task"
     arg_hash[:id] = "#{ARGV[idx+1]}"
 

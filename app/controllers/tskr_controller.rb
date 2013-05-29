@@ -75,7 +75,7 @@ class TskrController
   def render
     parse_render_options
 
-        task_width = 35
+        task_width = 40
     category_width = 15
     priority_width = 10
     due_date_width = 10

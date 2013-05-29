@@ -69,6 +69,9 @@ next month => month +1
 Current State
 =============
 
++[![Build Status](https://travis-ci.org/farfromguam/tskr.png)](https://travis-ci.org/farfromguam/tskr)
++
+
 Just about ready for Project Demos
 
 
@@ -84,7 +87,3 @@ Known Bugs
 ----------
 
 Date input changes type and does not pass tests.
-
-
-
-
