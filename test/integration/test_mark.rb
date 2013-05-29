@@ -13,10 +13,10 @@ class TskrIntegrationTest < MiniTest::Unit::TestCase
   def test_unmark_task
     `./tskr + "foo"`
     target_id = Task.where( name: 'foo' ).first.id
-    `./tskr x #{target_id}`
+    `./tskr xt #{target_id}`
     assert_equal Task.where( name: 'foo' ).first.complete, true
 
-    `./tskr !x #{target_id}`
+    `./tskr xt! #{target_id}`
     assert_equal Task.where( name: 'foo' ).first.complete, false
   end
 
