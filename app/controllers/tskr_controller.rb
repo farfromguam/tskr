@@ -82,26 +82,20 @@ class TskrController
     @table_width = @task_id_column + @check_column + @task_column + @category_column + @priority_column + @due_date_column + 11
   end
 
-  def header
+  def print_header
     sub_header_ljust = @task_id_column + @check_column + @task_column - 19
-    header = <<-eos
+    puts header = <<-eos
 ___ ____ _  _ ____
  |  [__  |_/  |__/
  |  ___] | \\_ |  \\ #{@sub_header.ljust(sub_header_ljust, " ")} | #{"Category".ljust(@category_column, " ")} | #{"Priority".ljust(@priority_column, " ")} | #{"Due Date".ljust(@due_date_column, " ")} |
 eos
   end
 
-  def hr
-    hr = "-" * @table_width
+  def print_hr
+    puts hr = "-" * @table_width
   end
 
-  def render
-    parse_render_options
-    calculate_column_widths
-
-    print "\e[H\e[2J" #clear the screen
-    puts header
-    puts hr
+  def print_tasks_table
     @tasks_for_render.each_with_index do |task, i|
 
       id = task.id.to_s.rjust(@task_id_column, " ")
@@ -111,10 +105,18 @@ eos
       priority = task.priority.to_s.ljust(@priority_column, " ")
       due_date = task.due_date.to_s.ljust(@due_date_column, " ")
 
-      puts "#{id} [#{check}] #{task_name} | #{category} | #{priority} | #{due_date} |\n"
+      print "#{id} [#{check}] #{task_name} | #{category} | #{priority} | #{due_date} |\n"
     end
-    puts hr
+  end
 
+  def render
+    parse_render_options
+    calculate_column_widths
+    print "\e[H\e[2J" #clear the screen
+    print_header
+    print_hr
+    print_tasks_table
+    print_hr
   end
 
 end
