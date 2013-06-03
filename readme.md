@@ -78,7 +78,10 @@ Common language date entry
 Current State
 =============
 
-[![Build Status](https://travis-ci.org/farfromguam/tskr.png)](https://travis-ci.org/farfromguam/tskr)<br>
+[![Build Status](https://travis-ci.org/farfromguam/tskr.png)](https://travis-ci.org/farfromguam/tskr)
+
+[![Code Climate](https://codeclimate.com/github/farfromguam/tskr.png)](https://codeclimate.com/github/farfromguam/tskr)
+
 Project Demos over, Ready for stage Two
 
 
