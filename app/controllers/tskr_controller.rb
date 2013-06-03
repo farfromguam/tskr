@@ -72,46 +72,50 @@ class TskrController
     end
   end
 
-  def render
-    parse_render_options
+  def column_widths
+        @task_width = 37
+    @category_width = 14
+    @priority_width = 12
+    @due_date_width = 10
+  end
 
-        task_width = 40
-    category_width = 15
-    priority_width = 10
-    due_date_width = 10
-
+  def assemble_header
     #these calculate spacing for the header, its ugly but it works
-    spaces_id_column = Task.last.id.to_s.length
+    @spaces_id_column = Task.last.id.to_s.length
     spaces_x_column = 5
-    spaces_before_sub_header = spaces_x_column + spaces_id_column
+    spaces_before_sub_header = spaces_x_column + @spaces_id_column
     left_padding = " " * spaces_before_sub_header
-    sub_header_ljust = spaces_before_sub_header + task_width - 19
-    hr_length = spaces_before_sub_header + task_width + 3 + category_width + 3 + priority_width + 3 + due_date_width + 2
-    hr = "=" * hr_length
+    sub_header_ljust = spaces_before_sub_header + @task_width - 19
+    hr_length = spaces_before_sub_header + @task_width + 3 + @category_width + 3 + @priority_width + 3 + @due_date_width + 2
+    hr = "-" * hr_length
 
     header = <<-eos
 ___ ____ _  _ ____
  |  [__  |_/  |__/
- |  ___] | \\_ |  \\ #{@sub_header.ljust(sub_header_ljust, " ")} | #{"Category".ljust(category_width, " ")} | #{"Priority".ljust(priority_width, " ")} | #{"Due Date".ljust(due_date_width, " ")} |
+ |  ___] | \\_ |  \\ #{@sub_header.ljust(sub_header_ljust, " ")} | #{"Category".ljust(@category_width, " ")} | #{"Priority".ljust(@priority_width, " ")} | #{"Due Date".ljust(@due_date_width, " ")} |
 #{hr}
 eos
+  end
+
+  def render
+    parse_render_options
+    column_widths
+    header = assemble_header
 
     print "\e[H\e[2J" #clear the screen
     print header
     @tasks_for_render.each_with_index do |task, i|
 
-      id = task.id.to_s.rjust(spaces_id_column, " ")
+      id = task.id.to_s.rjust(@spaces_id_column, " ")
       if task.complete? then check = "x" else check = " " end
-      task_name = task.name.ljust(task_width, " ")
-      category = task.category.name.to_s.ljust(category_width, " ")
-      priority = task.priority.to_s.ljust(priority_width, " ")
-      due_date = task.due_date.to_s.ljust(due_date_width, " ")
+      task_name = task.name.ljust(@task_width, " ")
+      category = task.category.name.to_s.ljust(@category_width, " ")
+      priority = task.priority.to_s.ljust(@priority_width, " ")
+      due_date = task.due_date.to_s.ljust(@due_date_width, " ")
 
       puts "#{id} [#{check}] #{task_name} | #{category} | #{priority} | #{due_date} |\n"
     end
-    puts hr
 
   end
-
 
 end
